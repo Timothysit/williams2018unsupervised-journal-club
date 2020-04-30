@@ -1,0 +1,26 @@
+{
+  "name": "msi-presentations",
+  "version": "1.0.0",
+  "description": "This repo contains the presentations made during my PhD, mostly concerning multisensory integration in the mouse cortex.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timothysit/msi-presentations.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Timothysit/msi-presentations/issues"
+  },
+  "homepage": "https://github.com/Timothysit/msi-presentations#readme",
+  "dependencies": {
+    "puppeteer": "^2.1.1"
+  }
+}
