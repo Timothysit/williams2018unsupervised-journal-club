@@ -8,6 +8,8 @@ revealOptions:
 ---
 
 
+
+
 <style>
 .reveal section img { background:none; border:none; box-shadow:none; }
 .reveal h1 { font-size: 2em; }
@@ -83,13 +85,20 @@ where:
 <!--h-->
 
 
+
+<font size=6>
+
 ### In matrix factorisation, we want to reconstruct the data from smaller matrices
+
+</font> 
+
+<font size=5>
 
 $$
 \mathbf{X} \approx \hat{\mathbf{X}} =  \mathbf{UV}^\intercal
 $$
 
-<font size=5>
+
 
 Another way to think about this is that we want to minimise the difference between the data and our approximation of it
 
@@ -146,7 +155,7 @@ $$
 
 </font>
 
-![trial-averaged matrix decomposition](./figures/williams2018unsupervised/figure-1a.png) <!-- .element  width="50%"--> 
+![trial-averaged matrix decomposition](./figures/williams2018unsupervised/figure-1a.png) <!-- .element  width="45%"--> 
 
 
 <!--v-->
@@ -298,6 +307,9 @@ CP (canonical polyadic) tensor decomposition
 This is the method used by tensor component analysis.
 Main effect: One neuron factor per temporal factor per trial factor. 
 
+$\boldsymbol{\mathcal{X}} \approx \sum_{r=1}^{R} \mathbf{a}_r \circ \mathbf{b}_r \circ \mathbf{c}_r$
+
+
 </font>
 
 </div>
@@ -310,10 +322,12 @@ Tucker tensor decomposition
 ![Tucker decomposition](./figures/tucker-decomposition.png) <!-- .element  width="100%"--> 
 
 
-
 <font size=5>
 
 Main effect: One neuron factor can be associated with multiple temporal / trial factors. But this makes interpretation difficult.
+
+$\boldsymbol{\mathcal{X}} \approx \boldsymbol{\mathcal{G}} \times_1 \mathbf{A} \times_2 \mathbf{B} \times_3 \mathbf{C}$
+
 
 </font>
  
@@ -354,12 +368,19 @@ TCA can reconstruct you data well allowing for:
 ### The main selling point of TCA is you get a *trial factor*
 
 
-![TCA and other methods](./figures/williams2018unsupervised/TCA-paper-figure-1.png)
+![TCA and other methods](./figures/williams2018unsupervised/TCA-paper-figure-1.png) <!-- .element  width="90%"--> 
 
 
 <!--h-->
 
+<font size=6>
+
 ### TCA is equivalent to a feedforward neural network with gain modulation
+
+
+</font>
+
+
 
 <font size=5>
 
@@ -399,6 +420,15 @@ Gain modulation <!-- .element: class="fragment" data-fragment-index="2" -->
 <!--v-->
 
 
+### Demo of best-case scenario for TCA
+
+![Base case scenario TCA](./figures/williams2018unsupervised/figure-2cde.png) <!-- .element  width="100%"-->
+
+
+
+<!--v-->
+
+
 ### Does that mean TCA is not suitable for modelling recurrent networks?
 
 Not necessarily.
@@ -409,7 +439,13 @@ Not necessarily.
 
 <!--h-->
 
+
+
+<font size=5>
+
 ### TCA + Time Warping 
+
+</font>
 
 <div id='left'>
 
@@ -420,7 +456,7 @@ If you remember from a few months ago in Kevin's journal club:
 [Williams et al 2019: Discovering Precise Temporal Patterns in Large-Scale Neural Recordings through Robust and Interpretable Time Warping]()
 
 
-![Time warp paper abstract](./figures/time-warp-paper-abstract.png)
+![Time warp paper abstract](./figures/time-warp-paper-abstract.png)  <!-- .element  width="80%"--> 
 
 
 
@@ -502,10 +538,18 @@ Recording using a miniature micro-endoscope in the medial prefrontal cortex whil
 
 <!--h-->
 
+
+<font size=6>
+
 #### TCA can reconstruct your data well with few parameters 
 
 
 PSTH of individual neurons can be reconstructed well with 15 components
+
+</font>
+
+
+
 
 
 <div id='left'>
@@ -550,12 +594,65 @@ Parameters
 
 <!--v-->
 
-#### TCA is unlikely to overfit
+#### "How do I know TCA is not overfitting?" 
+
+Method 1: cross-validate the reconstruction error
+
+
+![TCA cross validation](./figures/williams2018unsupervised/figure-5-ab.png) <!-- .element  width="70%"--> <!-- .element: class="fragment current-visible" data-fragment-index="1" -->
+
+
+![TCA cross validation part 2](./figures/williams2018unsupervised/figure-5c.png) <!-- .element  width="70%"--> <!-- .element: class="fragment current-visible" data-fragment-index="2" -->
+
+
+Even with 10% of the data, they have 90 data points per free parameter. <!-- .element: class="fragment current-visible" data-fragment-index="2" -->
+
+
+<!--v--> 
+
+
+#### "How do I know TCA is not overfitting?" 
+
+Method 2: check that the factors you obtain are similar across optimisations.
+
+![TCA model similarity](./figures/williams2018unsupervised/figure-4-h.png) <!-- .element  width="45%"-->
+
+
+<!--v--> 
+
+
+#### "How do I know TCA is not overfitting?" 
+
+Method 3: Look at how well you are fitting each neuron depending on how reliable they fire 
+
+<div id='left'>
+
+![TCA neuron variance](./figures/williams2018unsupervised/figure-4j.png) <!-- .element  width="100%"-->
+
+</div>
+
+
+<div id='right'>
+
+ - 'dimensionality': low dimensionality means firing reliably across trials 
+ - variance: dynamic range of neural activity
+
+
+</div>
+
+
 
 <!--h-->
 
 
+
+
+<font size=6>
+
 #### Factors extracted by (nonnegative) TCA are interpretable
+
+</font>
+
 
 <font size=4>
 
@@ -610,7 +707,14 @@ Component 4: All neurons decrease activity within each day (arousal related?) <!
 
 <!--v--> 
 
+
+
+<font size=5>
+
 #### "What if I just do PCA on the data instead?"
+
+</font>
+
 
 <font size=5>
 
@@ -623,7 +727,7 @@ For comparison purposes, Alex and others perform trials unfolding PCA, ie. you d
 
 <div id='left'> 
 
-![PCA on the spatial navigation task](./figures/williams2018unsupervised/figure-s6.png) <!-- .element  width="100%"--> <!-- .element: class="fragment current-visible" data-fragment-index="2" -->
+![PCA on the spatial navigation task](./figures/williams2018unsupervised/figure-s6.png) <!-- .element  width="80%"--> <!-- .element: class="fragment current-visible" data-fragment-index="2" -->
 
 </div>
 
@@ -647,9 +751,19 @@ Thought: Since we are using nonnegative TCA, will be more fair to compare with n
 <!--h-->
 
 
-### Pip's task and data structure
+### Audiovisual decision making task 
 
 
+
+![Pip audiovisual task](./figures/pip-multispaceworld-task-outline.png)  <!-- .element width="40%"-->
+
+
+<font size=5>
+
+Data: neuropixel recording of MOs neurons, aligned to movement, trials involve either left/right choices.
+
+
+</font>
 
 <!--h-->
 
@@ -676,9 +790,38 @@ fig, _, _ = tt.plot_factors(result.factors)
 
 <!--h-->
 
-### Pip's task: TCA component 1
+### Audiovisuals task: TCA component 1
 
 ![TCA first component](./figures/tca-examples/subject_3_exp_21_movement_aligned_min_100ms_best_5_components_component_1_trial_response_w_kde.png) <!-- .element  width="80%"-->
+
+
+<!--v-->
+
+
+![TCA component 2](./figures/tca-examples/subject_3_exp_21_movement_aligned_min_100ms_best_5_components_component_2_trial_response_w_kde.png) <!-- .element  width="80%"-->
+
+
+<!--v-->
+
+
+
+![TCA component 3](./figures/tca-examples/subject_3_exp_21_movement_aligned_min_100ms_best_5_components_component_3_trial_response_w_kde.png) <!-- .element  width="80%"-->
+
+
+
+<!--v-->
+
+
+![TCA component 4](./figures/tca-examples/subject_3_exp_21_movement_aligned_min_100ms_best_5_components_component_4_trial_response_w_kde.png) <!-- .element  width="80%"-->
+
+
+
+<!--v-->
+
+
+![TCA component 5](./figures/tca-examples/subject_3_exp_21_movement_aligned_min_100ms_best_5_components_component_5_trial_response_w_kde.png) <!-- .element  width="80%"-->
+
+
 
 
 
@@ -692,11 +835,16 @@ fig, _, _ = tt.plot_factors(result.factors)
 <font size=5>
 
 
- 1. TCA exploit the fact neural data can be organised by trials to give more interpretable components that relate to (a) within trial neural activity and (b) changes in amplitude of these activity across trials
- 2. Most task-related components that are retrieved probably can also be found using other methods, but since TCA is unsupservised, you may find components that were not obvious to you initially
+ 1. TCA exploit the fact neural data can be organised by trials to give more interpretable components that relate to (a) within trial neural activity and (b) changes in amplitude of these activity across trials <!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="1" -->
  
- - Pros: interpretable factors, trial factors, IMO simpler than other extensions/alternatives of PCA (eg. demixed PCA, Gaussian Process Factor Analysis). 
- - Cons: not an established technique, components may be different depending on the selected number of components (though it is possible to re-align them), and no closed form solution so you need to run iterations to get solution (ie. it may be slower)
+ 2. Most task-related components that are retrieved probably can also be found using other methods, but since TCA is unsupservised, you may find components that were not obvious to you initially <!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="2" -->
+ 
+ 
+ - Pros: interpretable factors, trial factors, IMO simpler than other extensions/alternatives of PCA (eg. demixed PCA, Gaussian Process Factor Analysis). <!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="3" -->
+ 
+ - Cons: not an established technique, components may be different depending on the selected number of components (though it is possible to re-align them), and no closed form solution so you need to run iterations to get solution (ie. it may be slower) <!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="4" -->
+ 
+ 
  
  </font>
 
@@ -707,10 +855,12 @@ fig, _, _ = tt.plot_factors(result.factors)
 
  - If you couldn't understand me, then the [author also did a talk about it](https://www.youtube.com/watch?v=hmmnRF66hOA&t=2s)
  - A good introduction to tensor decomposition: [Kolda and Bader 2009](https://epubs.siam.org/doi/abs/10.1137/07070111x)
+ - Someone asked on Quora: [What is all the current fuss about data tensor decomposition? ](https://www.quora.com/What-is-all-the-current-fuss-about-data-tensor-decomposition-and-analysis-Data-analysis-and-historical-perspective)
 
 
 
  <!--h-->
+ 
  
 
 
